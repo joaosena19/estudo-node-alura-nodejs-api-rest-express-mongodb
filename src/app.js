@@ -32,6 +32,17 @@ app.put('/livros/:id', (req, res) => {
   res.json(livros);
 })
 
+app.delete('/livros/:id', (req, res) => {
+  let {id} = req.params;
+  let index = buscaLivro(id);
+  
+  if (index > -1) //Se viesse -1, seria removido o último elemento do array
+    livros.splice(index, 1);
+
+  res.send(`Livro ${id} removido com sucesso`);
+})
+
+
 function buscaLivro(id) {
   return livros.findIndex(livro => livro.id == id)
 }
