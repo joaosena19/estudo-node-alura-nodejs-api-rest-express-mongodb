@@ -1,6 +1,7 @@
 import express from "express";
 
 const app = express();
+app.use(express.json()) // Middleware para fazer o parse do JSON no body da requisição
 
 const livros = [
   {id: 1, "titulo": "Senhor dos Aneis"},
@@ -15,4 +16,9 @@ app.get('/livros', (req, res) => {
   res.status(200).json(livros)
 })
 
-export default app
+app.post('/livros', (req, res) => {
+  livros.push(req.body);
+  res.status(201).send('Livro foi cadastrado com sucesso')
+})
+
+export default app 
