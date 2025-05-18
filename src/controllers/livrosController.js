@@ -4,7 +4,11 @@ class LivroController {
 
   static listarLivros = (req, res) => {
     livros.find((err, livros) => {
-      res.status(200).json(livros)
+      if(err) {
+        res.status(400).send({message: `${err.message} - falha ao listar livros.`})
+      } else {
+        res.status(200).json(livros)
+      }
     })
   }
 
@@ -42,7 +46,7 @@ class LivroController {
       if(err) {
         res.status(500).send({message: `${err.message} - falha ao atualizar livro.`})
       } else {
-        res.status(200).send("Livro atualizado com sucesso")
+        res.status(200).send({message: "Livro atualizado com sucesso"})
       }
     })  
   }
@@ -56,7 +60,7 @@ class LivroController {
       } else if (!livro) {
         res.status(404).send({ message: 'Livro não encontrado.' });
       } else {
-        res.status(200).send('Livro deletado com sucesso');
+        res.status(200).send({message: 'Livro deletado com sucesso'});
       }
     });
   };  
