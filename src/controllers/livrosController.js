@@ -3,7 +3,13 @@ import livros from "../models/Livro.js";
 class LivroController {
 
   static listarLivros = (req, res) => {
-    livros.find()
+    let livrosQuery = livros.find();
+
+    if(req.query.editora) {
+      livrosQuery = livrosQuery.find({editora: req.query.editora})
+    }
+
+    livrosQuery
           .populate('autor', 'nome')
           .exec((err, livros) => {
             if(err) {
