@@ -46,6 +46,20 @@ class LivroController {
       }
     })  
   }
+
+  static deletarLivro = (req, res) => {
+    const id = req.params.id;
+  
+    livros.findByIdAndDelete(id, (err, livro) => {
+      if (err) {
+        res.status(500).send({ message: `${err.message} - falha ao deletar livro.` });
+      } else if (!livro) {
+        res.status(404).send({ message: 'Livro não encontrado.' });
+      } else {
+        res.status(200).send('Livro deletado com sucesso');
+      }
+    });
+  };  
 }
 
 export default LivroController
